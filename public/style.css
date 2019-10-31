@@ -1,0 +1,13 @@
+#headings {
+    position: absolute;
+    color: rgb(231, 231, 231);
+    text-align: center;
+    top: 35%;
+    width: 100%;
+}
+#main-sub-heading {
+    line-height: 1.4;
+    width: 80%;
+    margin: 0 auto;
+    
+}

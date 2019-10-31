@@ -37,7 +37,7 @@ app.use(function(req,res,next){
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-const mongoURI = '';
+const mongoURI = 'mongodb://amdin:adminamdin1@ds217078.mlab.com:17078/use-me-cloud';
 mongoose.connect(mongoURI);
 const conn = mongoose.createConnection(mongoURI);
 
@@ -192,19 +192,18 @@ app.get('/files/:filename', (req, res) => {
 // @route DELETE /files/:id
 // @desc  Delete file
 app.delete('/files/:id', (req, res) => {
-  gfs.files.removeAndUpdate({ filename : req.params.id}, (err, gridStore) => {
+  gfs.files.remove({ filename : req.params.id}, (err, gridStore) => {
     if (err) {
       return res.status(404).json({ err: err });
     }   
     // 1. Delete the filename from user's file array and,
     var index = req.user.file.indexOf(req.params.id)
-    console.log(index);
+
     if(index>-1){
-      user.file.splice(index,1);
+      loggedInUser.file.splice(index,1);
     }
-    // 2. update it in the database
-    
-    
+
+    User.findByIdAndUpdate({_id: loggedInUser.id}, {$set: {file: loggedInUser.file}}).then((updatedDoc) => {})    
     
     res.redirect('/up/' + loggedInUser.username);
   });
