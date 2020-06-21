@@ -37,7 +37,7 @@ app.use(function(req,res,next){
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-const mongoURI = '';
+const mongoURI = 'mongodb://amdin:adminamdin1@ds217078.mlab.com:17078/use-me-cloud';
 mongoose.connect(mongoURI);
 const conn = mongoose.createConnection(mongoURI);
 
